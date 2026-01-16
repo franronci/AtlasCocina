@@ -94,29 +94,42 @@
 
     <!-- Navigation / Header -->
     <header class="bg-white dark:bg-slate-800 shadow-sm sticky top-0 z-40 border-b border-slate-200 dark:border-slate-700">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="bg-leaf-100 dark:bg-leaf-900 p-2 rounded-full text-leaf-700 dark:text-leaf-400">
-                    <i class="fas fa-carrot text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="font-serif text-2xl font-bold text-leaf-900 dark:text-leaf-400 leading-none">Atlas de Ensaladas</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">150 Recetas e Ideas</p>
-                </div>
+        <div class="container mx-auto px-4 py-4">
+            <!-- Main Navigation Tabs -->
+            <div class="flex justify-center mb-4 gap-2">
+                <button id="tabAtlas" onclick="app.switchSection('atlas')" class="tab-btn active bg-leaf-500 hover:bg-leaf-700 text-white px-6 py-2 rounded-lg transition items-center gap-2 text-sm font-semibold shadow-sm">
+                    <i class="fas fa-carrot"></i> Atlas de Ensaladas
+                </button>
+                <button id="tabEsther" onclick="app.switchSection('esther')" class="tab-btn bg-purple-500 hover:bg-purple-700 text-white px-6 py-2 rounded-lg transition items-center gap-2 text-sm font-semibold shadow-sm">
+                    <i class="fas fa-heart"></i> Recetas Esther
+                </button>
             </div>
-            <div class="flex items-center gap-3">
-                <button id="darkModeToggle" onclick="app.toggleDarkMode()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-lg transition items-center gap-2 text-sm font-semibold shadow-sm hover:bg-slate-300 dark:hover:bg-slate-600">
-                    <i class="fas fa-moon dark:hidden"></i>
-                    <i class="fas fa-sun hidden dark:inline"></i>
-                </button>
-                <button onclick="app.getRandomSalad()" class="hidden md:flex bg-leaf-500 hover:bg-leaf-700 text-white px-4 py-2 rounded-lg transition items-center gap-2 text-sm font-semibold shadow-sm">
-                    <i class="fas fa-random"></i> ¡Sorpréndeme!
-                </button>
+            <!-- Header Content -->
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div id="headerIcon" class="bg-leaf-100 dark:bg-leaf-900 p-2 rounded-full text-leaf-700 dark:text-leaf-400">
+                        <i class="fas fa-carrot text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 id="headerTitle" class="font-serif text-2xl font-bold text-leaf-900 dark:text-leaf-400 leading-none">Atlas de Ensaladas</h1>
+                        <p id="headerSubtitle" class="text-xs text-slate-500 dark:text-slate-400 font-medium">150 Recetas e Ideas</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="darkModeToggle" onclick="app.toggleDarkMode()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-lg transition items-center gap-2 text-sm font-semibold shadow-sm hover:bg-slate-300 dark:hover:bg-slate-600">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:inline"></i>
+                    </button>
+                    <button id="randomBtn" onclick="app.getRandomSalad()" class="hidden md:flex bg-leaf-500 hover:bg-leaf-700 text-white px-4 py-2 rounded-lg transition items-center gap-2 text-sm font-semibold shadow-sm">
+                        <i class="fas fa-random"></i> ¡Sorpréndeme!
+                    </button>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8 space-y-12">
+    <!-- Atlas de Ensaladas Section -->
+    <main id="atlasSection" class="container mx-auto px-4 py-8 space-y-12">
 
         <!-- Intro Section -->
         <section class="text-center max-w-3xl mx-auto space-y-4">
@@ -180,6 +193,51 @@
             <!-- Pagination buttons -->
         </div>
 
+    </main>
+
+    <!-- Recetas Esther Section -->
+    <main id="estherSection" class="container mx-auto px-4 py-8 space-y-12 hidden">
+        <!-- Intro Section -->
+        <section class="text-center max-w-3xl mx-auto space-y-4">
+            <h2 class="text-4xl font-serif text-purple-800 dark:text-purple-300 font-bold">Recetas Esther</h2>
+            <p class="text-lg text-slate-600 dark:text-slate-300">
+                Colección especial de <strong>recetas 100% antiinflamatorias</strong>. 
+                Platos, postres, jugos, smoothies y más, diseñados para reducir la inflamación y promover la salud.
+                Todos los ingredientes y aderezos son cuidadosamente seleccionados para ser completamente antiinflamatorios.
+            </p>
+        </section>
+
+        <!-- Filter & Search Bar -->
+        <section class="space-y-4 sticky top-20 z-30 bg-earth-100/95 dark:bg-slate-900/95 backdrop-blur-sm py-4 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex flex-col md:flex-row gap-4 justify-between">
+                <!-- Search -->
+                <div class="relative w-full md:w-1/3">
+                    <i class="fas fa-search absolute left-3 top-3 text-slate-400 dark:text-slate-500"></i>
+                    <input type="text" id="estherSearchInput" placeholder="Buscar receta antiinflamatoria..." 
+                           class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-purple-500 transition">
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-2/3 hide-scrollbar" id="estherCategoryFilters">
+                    <button class="filter-btn active bg-purple-800 dark:bg-purple-700 text-white px-4 py-2 rounded-full text-sm whitespace-nowrap transition" data-category="all">Todas</button>
+                    <!-- JS will populate categories -->
+                </div>
+            </div>
+            <div class="flex justify-between items-center text-sm text-slate-500 dark:text-slate-400 px-1">
+                <span id="estherResultCount">Mostrando recetas antiinflamatorias</span>
+                <span class="hidden md:inline">Tip: Todas las recetas son 100% antiinflamatorias.</span>
+            </div>
+        </section>
+
+        <!-- Main Grid -->
+        <section id="estherGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Cards will be injected here by JS -->
+        </section>
+
+        <!-- Pagination -->
+        <div class="flex justify-center gap-2 mt-8" id="estherPaginationControls">
+            <!-- Pagination buttons -->
+        </div>
     </main>
 
     <!-- Footer -->
@@ -1021,25 +1079,404 @@
 
         const allSalads = generateVariations();
 
+        // --- RECETAS ESTHER - ANTIINFLAMATORIAS ---
+        // Helper para crear recetas Esther (más flexible, permite diferentes tipos)
+        const createEstherRecipe = (id, name, type, cat, base, baseQty, ings, dressing, dressingQty, prepSteps, cal, protein, carbs, fat, fiber, servings, time) => ({
+            id, name, type, category: cat, 
+            base: { name: base, quantity: baseQty },
+            ingredients: ings,
+            dressing: { name: dressing, quantity: dressingQty },
+            preparation: prepSteps,
+            nutrition: { calories: cal, protein, carbs, fat, fiber },
+            servings, time
+        });
+
+        // Recetas Esther - Variedad completa antiinflamatoria
+        // Primero extraer las ensaladas Esther del array principal
+        const estherSaladsFromMain = allSalads.filter(s => s.category === "Recetas Esther").map(s => ({
+            ...s, 
+            type: "Ensalada",
+            id: s.id // Mantener IDs originales
+        }));
+        
+        const estherRecipes = [
+            // Ensaladas (mantener las existentes pero con type)
+            ...estherSaladsFromMain,
+            
+            // PLATOS PRINCIPALES
+            createEstherRecipe(101, "Salmón al Horno con Vegetales", "Plato Principal", "Platos Principales", "Salmón", "300g (2 filetes)", 
+                [{name: "Brócoli", quantity: "200g"}, {name: "Coliflor", quantity: "200g"}, {name: "Zanahoria", quantity: "2 medianas"}, {name: "Ajo", quantity: "3 dientes"}],
+                "Aceite de oliva extra virgen, limón, cúrcuma y jengibre", "3 cucharadas de aceite + jugo de 1 limón + 1 cucharadita de cúrcuma + 1 cucharadita de jengibre rallado",
+                ["PREPARACIÓN DEL SALMÓN: El salmón es rico en omega-3, uno de los antiinflamatorios más potentes. Seca los filetes completamente con papel de cocina. Sazona generosamente con sal marina y pimienta negra. La pimienta aumenta la absorción de la cúrcuma.",
+                 "PREPARACIÓN DE VEGETALES: Lava y corta el brócoli en floretes. Separa la coliflor en floretes. Pela y corta las zanahorias en rodajas de 1 cm. Pela y pica finamente el ajo. Todos estos vegetales son ricos en antioxidantes antiinflamatorios.",
+                 "MARINADA ANTIINFLAMATORIA: En un bol, combina 3 cucharadas de aceite de oliva extra virgen, el jugo de 1 limón, 1 cucharadita de cúrcuma en polvo, 1 cucharadita de jengibre rallado, el ajo picado, sal y pimienta. Mezcla bien. Esta marinada es extremadamente antiinflamatoria.",
+                 "MARINAR: Coloca el salmón y los vegetales en una bandeja. Vierte la marinada sobre todo, asegurándote de cubrir bien. Deja marinar durante 30 minutos a temperatura ambiente (o 1 hora en el refrigerador).",
+                 "COCCIÓN: Precalienta el horno a 200°C. Coloca el salmón y los vegetales en una bandeja para horno forrada con papel de aluminio. Ase durante 20-25 minutos hasta que el salmón esté cocido (se separa fácilmente con un tenedor) y los vegetales estén tiernos pero aún crujientes.",
+                 "SERVIR: Sirve inmediatamente mientras está caliente. El salmón proporciona omega-3, los vegetales antioxidantes, y la cúrcuma y jengibre potentes compuestos antiinflamatorios. Acompaña con quinoa o arroz integral si deseas."],
+                450, 35, 25, 22, 8, 2, 45),
+            
+            createEstherRecipe(102, "Curry de Garbanzos y Vegetales", "Plato Principal", "Platos Principales", "Garbanzos", "400g (2 tazas cocidos)", 
+                [{name: "Calabaza", quantity: "300g"}, {name: "Espinaca", quantity: "200g"}, {name: "Tomate", quantity: "2 medianos"}, {name: "Cebolla", quantity: "1 mediana"}],
+                "Aceite de coco, cúrcuma, comino, jengibre", "2 cucharadas de aceite de coco + 1 cucharada de cúrcuma + 1 cucharadita de comino + 1 cucharadita de jengibre rallado",
+                ["PREPARACIÓN DE VEGETALES: Pela y corta la calabaza en cubos de 2 cm. Pica la cebolla finamente. Corta los tomates en cubos. Lava la espinaca. Todos estos ingredientes son antiinflamatorios.",
+                 "SOFRITO: En una olla grande, calienta 2 cucharadas de aceite de coco (antiinflamatorio) a fuego medio. Añade la cebolla y cocina 5 minutos hasta que esté transparente. Añade 1 cucharada de cúrcuma, 1 cucharadita de comino y 1 cucharadita de jengibre rallado. Cocina 1 minuto hasta que huelan aromáticos.",
+                 "COCCIÓN: Añade los cubos de calabaza y los tomates. Revuelve para cubrir con las especias. Añade 1 taza de agua o caldo vegetal. Tapa y cocina a fuego medio-bajo durante 15 minutos hasta que la calabaza esté tierna.",
+                 "AÑADIR GARBANZOS Y ESPINACA: Añade los garbanzos escurridos y cocina 5 minutos más. Finalmente, añade la espinaca y cocina 2 minutos hasta que se marchite. La espinaca añade antioxidantes adicionales.",
+                 "SERVIR: Sirve caliente sobre quinoa o arroz integral. Este curry es rico en proteína vegetal, fibra y compuestos antiinflamatorios de la cúrcuma, jengibre y comino."],
+                380, 18, 45, 14, 15, 4, 30),
+            
+            // JUGOS Y SMOOTHIES
+            createEstherRecipe(103, "Jugo Verde Antiinflamatorio", "Jugo", "Bebidas", "Espinaca", "2 tazas", 
+                [{name: "Pepino", quantity: "1 mediano"}, {name: "Apio", quantity: "2 tallos"}, {name: "Jengibre", quantity: "2 cm"}, {name: "Limón", quantity: "1/2 unidad"}],
+                "Agua filtrada", "1 taza de agua",
+                ["PREPARACIÓN: Lava todos los ingredientes. El pepino, apio y espinaca son extremadamente antiinflamatorios y alcalinizantes.",
+                 "LICUADO: En una licuadora de alta potencia, combina la espinaca, el pepino cortado, los tallos de apio, el jengibre pelado y cortado, el jugo de medio limón y 1 taza de agua filtrada.",
+                 "PROCESAR: Licua a velocidad alta durante 1-2 minutos hasta que esté completamente suave. Si es necesario, añade más agua para alcanzar la consistencia deseada.",
+                 "COLAR (OPCIONAL): Si prefieres un jugo sin pulpa, cuela a través de un colador fino o una gasa.",
+                 "SERVIR: Bebe inmediatamente para obtener el máximo beneficio de las enzimas y nutrientes. Este jugo es rico en clorofila, antioxidantes y compuestos antiinflamatorios del jengibre."],
+                45, 3, 8, 0, 4, 1, 5),
+            
+            createEstherRecipe(104, "Smoothie de Bayas y Cúrcuma", "Smoothie", "Bebidas", "Arándanos", "1 taza", 
+                [{name: "Fresas", quantity: "1/2 taza"}, {name: "Plátano", quantity: "1 mediano"}, {name: "Cúrcuma", quantity: "1 cucharadita"}, {name: "Jengibre", quantity: "1 cm"}, {name: "Semillas de chía", quantity: "1 cucharada"}],
+                "Leche de almendras sin azúcar", "1 taza",
+                ["PREPARACIÓN: Lava las bayas. Pela el plátano y córtalo en rodajas. Pela el jengibre.",
+                 "LICUADO: En una licuadora, combina los arándanos, fresas, plátano, 1 cucharadita de cúrcuma en polvo, jengibre rallado, semillas de chía y 1 taza de leche de almendras sin azúcar.",
+                 "PROCESAR: Licua a velocidad alta durante 1-2 minutos hasta que esté cremoso y suave. Las semillas de chía añaden omega-3 y fibra.",
+                 "SERVIR: Bebe inmediatamente. Este smoothie es extremadamente rico en antioxidantes de las bayas y compuestos antiinflamatorios de la cúrcuma y jengibre. Las semillas de chía proporcionan omega-3 vegetal."],
+                180, 5, 32, 6, 8, 1, 5),
+            
+            createEstherRecipe(105, "Jugo de Remolacha y Jengibre", "Jugo", "Bebidas", "Remolacha", "1 mediana", 
+                [{name: "Zanahoria", quantity: "2 medianas"}, {name: "Manzana verde", quantity: "1 mediana"}, {name: "Jengibre", quantity: "2 cm"}, {name: "Limón", quantity: "1/2 unidad"}],
+                "Agua filtrada", "1/2 taza de agua",
+                ["PREPARACIÓN: Pela la remolacha, zanahorias y manzana. Corta en trozos que quepan en el extractor de jugo. Pela el jengibre.",
+                 "EXTRACCIÓN: Pasa todos los ingredientes por un extractor de jugo. Si no tienes extractor, licúa y cuela.",
+                 "MEZCLAR: Combina el jugo extraído con el jugo de medio limón y media taza de agua. Mezcla bien.",
+                 "SERVIR: Bebe inmediatamente. La remolacha es rica en betalaínas (antioxidantes potentes), las zanahorias en betacarotenos, y el jengibre es un antiinflamatorio natural."],
+                95, 2, 22, 0, 5, 1, 10),
+            
+            // POSTRES
+            createEstherRecipe(106, "Pudding de Chía con Bayas", "Postre", "Postres", "Semillas de chía", "1/4 taza", 
+                [{name: "Arándanos", quantity: "1/2 taza"}, {name: "Fresas", quantity: "1/2 taza"}, {name: "Almendras", quantity: "2 cucharadas picadas"}],
+                "Leche de almendras sin azúcar y miel cruda", "1 taza de leche de almendras + 1 cucharada de miel cruda",
+                ["PREPARACIÓN: Lava las bayas. Pica las almendras groseramente.",
+                 "MEZCLAR: En un frasco o bol, combina 1/4 taza de semillas de chía con 1 taza de leche de almendras sin azúcar y 1 cucharada de miel cruda. Mezcla bien con un batidor.",
+                 "REPOSO: Deja reposar durante 10 minutos, luego remueve nuevamente para evitar grumos. Refrigera durante al menos 4 horas (o toda la noche) hasta que las semillas de chía hayan absorbido el líquido y formen un pudding.",
+                 "SERVIR: Antes de servir, remueve una vez más. Añade las bayas frescas y las almendras picadas por encima. Las semillas de chía son ricas en omega-3, fibra y antioxidantes."],
+                280, 8, 35, 12, 15, 2, 10),
+            
+            createEstherRecipe(107, "Bolas de Dátiles y Nueces", "Postre", "Postres", "Dátiles", "1 taza (sin hueso)", 
+                [{name: "Nueces", quantity: "1/2 taza"}, {name: "Almendras", quantity: "1/4 taza"}, {name: "Cacao en polvo sin azúcar", quantity: "2 cucharadas"}, {name: "Coco rallado", quantity: "2 cucharadas"}],
+                "Sin aderezo", "N/A",
+                ["PREPARACIÓN: Si los dátiles están muy duros, remójalos en agua tibia durante 10 minutos y escúrrelos. Elimina los huesos si los tienen.",
+                 "PROCESAR: En un procesador de alimentos, combina los dátiles, nueces y almendras. Procesa hasta que se forme una pasta pegajosa (1-2 minutos).",
+                 "AÑADIR CACAO: Añade 2 cucharadas de cacao en polvo sin azúcar (rico en flavonoides antiinflamatorios) y procesa 30 segundos más hasta que esté bien mezclado.",
+                 "FORMAR BOLAS: Con las manos limpias, forma bolas de aproximadamente 2-3 cm de diámetro. Si la mezcla está muy pegajosa, puedes enharinar ligeramente las manos con coco rallado.",
+                 "CUBRIR: Rueda las bolas en coco rallado para cubrirlas.",
+                 "REPOSO: Refrigera durante al menos 30 minutos para que se firmen.",
+                 "SERVIR: Estas bolas son naturalmente dulces de los dátiles, ricas en grasas saludables de las nueces, y el cacao proporciona antioxidantes. Son un postre perfecto antiinflamatorio."],
+                180, 4, 22, 10, 6, 8, 15),
+            
+            // SOPAS
+            createEstherRecipe(108, "Sopa de Lentejas y Cúrcuma", "Sopa", "Sopas", "Lentejas rojas", "200g (1 taza)", 
+                [{name: "Cebolla", quantity: "1 mediana"}, {name: "Zanahoria", quantity: "2 medianas"}, {name: "Apio", quantity: "2 tallos"}, {name: "Ajo", quantity: "3 dientes"}, {name: "Jengibre", quantity: "2 cm"}],
+                "Aceite de oliva extra virgen, cúrcuma, comino", "2 cucharadas de aceite + 1 cucharada de cúrcuma + 1 cucharadita de comino",
+                ["PREPARACIÓN: Pica la cebolla finamente. Corta las zanahorias en rodajas. Corta el apio en trozos pequeños. Pica el ajo y ralla el jengibre.",
+                 "SOFRITO: En una olla grande, calienta 2 cucharadas de aceite de oliva extra virgen a fuego medio. Añade la cebolla y cocina 5 minutos hasta que esté transparente. Añade el ajo y jengibre y cocina 1 minuto más.",
+                 "AÑADIR ESPECIAS: Añade 1 cucharada de cúrcuma en polvo y 1 cucharadita de comino molido. Revuelve durante 30 segundos hasta que huelan aromáticas.",
+                 "AÑADIR VEGETALES Y LENTEJAS: Añade las zanahorias, apio y lentejas rojas. Revuelve para cubrir con las especias. Añade 4 tazas de agua o caldo vegetal.",
+                 "COCCIÓN: Lleva a ebullición, luego reduce el fuego y cocina a fuego medio-bajo durante 25-30 minutos hasta que las lentejas estén completamente cocidas y la sopa esté espesa.",
+                 "SERVIR: Sirve caliente. Esta sopa es extremadamente antiinflamatoria gracias a la cúrcuma, jengibre y las lentejas ricas en fibra. Acompaña con pan integral sin gluten si deseas."],
+                250, 15, 38, 8, 12, 4, 35),
+            
+            createEstherRecipe(109, "Crema de Brócoli Antiinflamatoria", "Sopa", "Sopas", "Brócoli", "500g (1 cabeza grande)", 
+                [{name: "Cebolla", quantity: "1 mediana"}, {name: "Ajo", quantity: "2 dientes"}, {name: "Jengibre", quantity: "1 cm"}],
+                "Aceite de oliva extra virgen y caldo vegetal", "2 cucharadas de aceite + 4 tazas de caldo vegetal",
+                ["PREPARACIÓN: Lava el brócoli y separa en floretes. Pica la cebolla finamente. Pica el ajo y ralla el jengibre.",
+                 "SOFRITO: En una olla grande, calienta 2 cucharadas de aceite de oliva a fuego medio. Añade la cebolla y cocina 5 minutos. Añade el ajo y jengibre y cocina 1 minuto más.",
+                 "AÑADIR BRÓCOLI: Añade los floretes de brócoli y revuelve para cubrir con el sofrito. Añade 4 tazas de caldo vegetal.",
+                 "COCCIÓN: Lleva a ebullición, luego reduce el fuego y cocina a fuego medio-bajo durante 15-20 minutos hasta que el brócoli esté muy tierno.",
+                 "LICUAR: Con cuidado (está caliente), licua la sopa en una licuadora hasta que esté completamente suave y cremosa. Puede ser necesario hacerlo en lotes.",
+                 "SERVIR: Sirve caliente. El brócoli contiene sulforafano, un compuesto extremadamente antiinflamatorio. Esta crema es nutritiva y curativa."],
+                120, 6, 15, 6, 6, 4, 25),
+            
+            // Más Jugos y Smoothies
+            createEstherRecipe(110, "Smoothie Verde con Espinaca y Piña", "Smoothie", "Bebidas", "Espinaca", "2 tazas", 
+                [{name: "Piña", quantity: "1 taza cortada"}, {name: "Plátano", quantity: "1 mediano"}, {name: "Jengibre", quantity: "1 cm"}, {name: "Semillas de lino molidas", quantity: "1 cucharada"}],
+                "Agua de coco", "1 taza",
+                ["PREPARACIÓN: Lava la espinaca. Corta la piña en trozos. Pela el plátano y córtalo en rodajas. Pela el jengibre.",
+                 "LICUADO: En una licuadora, combina la espinaca, piña, plátano, jengibre rallado, semillas de lino molidas y 1 taza de agua de coco (rico en electrolitos y antiinflamatorio).",
+                 "PROCESAR: Licua a velocidad alta durante 1-2 minutos hasta que esté completamente suave y cremoso.",
+                 "SERVIR: Bebe inmediatamente. La espinaca proporciona clorofila y antioxidantes, la piña contiene bromelina (antiinflamatorio natural), y las semillas de lino omega-3."],
+                220, 6, 42, 8, 8, 1, 5),
+            
+            createEstherRecipe(111, "Jugo de Zanahoria, Jengibre y Cúrcuma", "Jugo", "Bebidas", "Zanahoria", "4 medianas", 
+                [{name: "Manzana verde", quantity: "1 mediana"}, {name: "Jengibre", quantity: "3 cm"}, {name: "Cúrcuma fresca", quantity: "2 cm"}, {name: "Limón", quantity: "1/2 unidad"}],
+                "Agua filtrada", "1/2 taza",
+                ["PREPARACIÓN: Pela las zanahorias, manzana, jengibre y cúrcuma. Corta en trozos que quepan en el extractor.",
+                 "EXTRACCIÓN: Pasa todos los ingredientes por un extractor de jugo. Si no tienes extractor, licúa y cuela finamente.",
+                 "MEZCLAR: Combina el jugo extraído con el jugo de medio limón y media taza de agua. Mezcla bien.",
+                 "SERVIR: Bebe inmediatamente. Las zanahorias son ricas en betacarotenos, el jengibre y cúrcuma son potentes antiinflamatorios, y la manzana añade dulzura natural."],
+                110, 2, 26, 0, 6, 1, 10),
+            
+            createEstherRecipe(112, "Smoothie de Cerezas y Cúrcuma", "Smoothie", "Bebidas", "Cerezas", "1 taza (sin hueso)", 
+                [{name: "Plátano", quantity: "1 mediano"}, {name: "Almendras", quantity: "2 cucharadas"}, {name: "Cúrcuma", quantity: "1 cucharadita"}, {name: "Canela", quantity: "1/2 cucharadita"}],
+                "Leche de almendras sin azúcar", "1 taza",
+                ["PREPARACIÓN: Elimina los huesos de las cerezas. Pela el plátano y córtalo en rodajas. Las cerezas son extremadamente ricas en antocianinas antiinflamatorias.",
+                 "LICUADO: En una licuadora, combina las cerezas, plátano, almendras, 1 cucharadita de cúrcuma en polvo, 1/2 cucharadita de canela (antiinflamatoria) y 1 taza de leche de almendras.",
+                 "PROCESAR: Licua a velocidad alta durante 1-2 minutos hasta que esté cremoso y suave.",
+                 "SERVIR: Bebe inmediatamente. Las cerezas tienen propiedades antiinflamatorias similares a los medicamentos, la cúrcuma es un potente antiinflamatorio, y la canela añade sabor y beneficios adicionales."],
+                250, 6, 38, 10, 6, 1, 5),
+            
+            // Más Postres
+            createEstherRecipe(113, "Helado de Plátano y Cacao", "Postre", "Postres", "Plátanos congelados", "3 medianos", 
+                [{name: "Cacao en polvo sin azúcar", quantity: "2 cucharadas"}, {name: "Almendras", quantity: "2 cucharadas"}, {name: "Canela", quantity: "1/2 cucharadita"}],
+                "Sin aderezo", "N/A",
+                ["PREPARACIÓN: Pela los plátanos y córtalos en rodajas de 2 cm. Colócalos en una bandeja y congela durante al menos 4 horas (o toda la noche) hasta que estén completamente congelados.",
+                 "PROCESAR: En un procesador de alimentos de alta potencia, procesa los plátanos congelados durante 2-3 minutos hasta que se forme una crema suave. Puede ser necesario raspar los lados varias veces.",
+                 "AÑADIR SABOR: Añade 2 cucharadas de cacao en polvo sin azúcar (rico en flavonoides), 2 cucharadas de almendras, y 1/2 cucharadita de canela. Procesa 30 segundos más hasta que esté bien mezclado.",
+                 "SERVIR: Sirve inmediatamente como helado suave, o congela durante 30 minutos para una textura más firme. Este 'helado' es naturalmente dulce, cremoso y completamente antiinflamatorio."],
+                180, 5, 32, 8, 8, 2, 10),
+            
+            createEstherRecipe(114, "Mousse de Aguacate y Cacao", "Postre", "Postres", "Aguacate", "2 medianos", 
+                [{name: "Cacao en polvo sin azúcar", quantity: "3 cucharadas"}, {name: "Miel cruda", quantity: "2 cucharadas"}, {name: "Vainilla", quantity: "1 cucharadita"}],
+                "Sin aderezo", "N/A",
+                ["PREPARACIÓN: Pela los aguacates y elimina los huesos. Asegúrate de que los aguacates estén maduros pero no pasados.",
+                 "PROCESAR: En un procesador de alimentos, combina los aguacates, 3 cucharadas de cacao en polvo sin azúcar, 2 cucharadas de miel cruda (o dátiles remojados para versión vegana), y 1 cucharadita de extracto de vainilla.",
+                 "PROCESAR: Procesa durante 1-2 minutos hasta que esté completamente suave y cremoso, sin grumos. El aguacate proporciona una textura cremosa natural.",
+                 "REPOSO: Refrigera durante al menos 1 hora para que se enfríe y los sabores se integren.",
+                 "SERVIR: Sirve frío. Este mousse es rico en grasas saludables del aguacate y antioxidantes del cacao. Es naturalmente dulce y completamente antiinflamatorio."],
+                280, 4, 22, 20, 12, 4, 15),
+            
+            // Más Platos Principales
+            createEstherRecipe(115, "Bowl de Quinoa y Vegetales Asados", "Plato Principal", "Platos Principales", "Quinoa", "200g (1 taza cruda)", 
+                [{name: "Berenjena", quantity: "1 mediana"}, {name: "Calabacín", quantity: "1 mediano"}, {name: "Pimiento rojo", quantity: "1 mediano"}, {name: "Aguacate", quantity: "1 mediano"}],
+                "Aceite de oliva extra virgen, limón y hierbas", "3 cucharadas de aceite + jugo de 1 limón + hierbas frescas",
+                ["COCCIÓN DE QUINOA: Enjuaga y cocina la quinoa según método estándar. Deja enfriar completamente.",
+                 "ASADO DE VEGETALES: Precalienta el horno a 200°C. Corta la berenjena, calabacín y pimiento en cubos de 2 cm. Coloca en una bandeja, rocía con aceite de oliva y sazona. Ase 20-25 minutos hasta que estén tiernos y dorados.",
+                 "PREPARACIÓN DE AGUACATE: Corta el aguacate en cubos. Rociar con limón para evitar oxidación.",
+                 "ADEREZO: Combina aceite de oliva, jugo de limón, hierbas frescas picadas (albahaca, perejil), sal y pimienta.",
+                 "ENSAMBLAJE: En un bowl, coloca la quinoa como base. Añade los vegetales asados y el aguacate. Rociar con el aderezo.",
+                 "SERVIR: Este bowl es completo, nutritivo y extremadamente antiinflamatorio gracias a los vegetales asados, quinoa y aceite de oliva."],
+                420, 14, 48, 18, 12, 2, 35),
+            
+            createEstherRecipe(116, "Pescado al Vapor con Vegetales", "Plato Principal", "Platos Principales", "Filete de pescado blanco", "300g (2 filetes)", 
+                [{name: "Brócoli", quantity: "200g"}, {name: "Zanahoria", quantity: "2 medianas"}, {name: "Jengibre", quantity: "2 cm"}, {name: "Ajo", quantity: "2 dientes"}],
+                "Aceite de oliva extra virgen, salsa de soja baja en sodio, limón", "2 cucharadas de aceite + 1 cucharada de soja + jugo de 1 limón",
+                ["PREPARACIÓN: Seca los filetes de pescado. Corta el brócoli en floretes. Corta las zanahorias en rodajas finas. Pica el jengibre y ajo finamente.",
+                 "VAPOR: Prepara una vaporera. Coloca el pescado en la parte superior, y los vegetales alrededor. Espolvorea con jengibre y ajo picado.",
+                 "COCCIÓN: Cocina al vapor durante 12-15 minutos hasta que el pescado esté opaco y se separe fácilmente, y los vegetales estén tiernos pero crujientes.",
+                 "ADEREZO: Combina aceite de oliva, salsa de soja baja en sodio, y jugo de limón.",
+                 "SERVIR: Sirve el pescado y vegetales calientes con el aderezo por encima. El pescado al vapor mantiene todos sus nutrientes omega-3, y los vegetales al vapor conservan sus antioxidantes."],
+                320, 35, 18, 12, 6, 2, 20),
+            
+            // Más Platos Principales
+            createEstherRecipe(117, "Tofu Salteado con Vegetales", "Plato Principal", "Platos Principales", "Tofu firme", "400g", 
+                [{name: "Brócoli", quantity: "200g"}, {name: "Pimiento rojo", quantity: "1 mediano"}, {name: "Zanahoria", quantity: "2 medianas"}, {name: "Jengibre", quantity: "2 cm"}, {name: "Ajo", quantity: "3 dientes"}],
+                "Aceite de oliva extra virgen, salsa de soja baja en sodio, cúrcuma", "2 cucharadas de aceite + 2 cucharadas de soja + 1 cucharadita de cúrcuma",
+                ["PREPARACIÓN DEL TOFU: Escurre el tofu y sécalo completamente con papel de cocina. Corta en cubos de 2 cm. El tofu es rico en proteína vegetal y isoflavonas antiinflamatorias.",
+                 "PREPARACIÓN DE VEGETALES: Corta el brócoli en floretes. Corta el pimiento en tiras. Corta las zanahorias en rodajas finas. Pica el jengibre y ajo finamente.",
+                 "SALTEADO: En un wok o sartén grande, calienta 1 cucharada de aceite de oliva a fuego alto. Añade el tofu y saltea 5-6 minutos hasta que esté dorado. Retira y reserva.",
+                 "SALTEAR VEGETALES: En la misma sartén, añade otra cucharada de aceite. Añade el jengibre y ajo, cocina 30 segundos. Añade los vegetales y saltea 5-6 minutos hasta que estén tiernos pero crujientes.",
+                 "AÑADIR TOFU Y SAZONAR: Vuelve a añadir el tofu. Añade 2 cucharadas de salsa de soja baja en sodio y 1 cucharadita de cúrcuma. Revuelve bien y cocina 1 minuto más.",
+                 "SERVIR: Sirve caliente sobre quinoa o arroz integral. Este plato es rico en proteína vegetal y compuestos antiinflamatorios de la cúrcuma y jengibre."],
+                320, 22, 18, 16, 8, 3, 20),
+            
+            createEstherRecipe(118, "Risotto de Quinoa con Setas", "Plato Principal", "Platos Principales", "Quinoa", "200g (1 taza cruda)", 
+                [{name: "Setas mixtas", quantity: "300g"}, {name: "Cebolla", quantity: "1 mediana"}, {name: "Ajo", quantity: "2 dientes"}, {name: "Caldo vegetal", quantity: "4 tazas"}],
+                "Aceite de oliva extra virgen y hierbas frescas", "3 cucharadas de aceite + hierbas frescas (tomillo, romero)",
+                ["PREPARACIÓN: Enjuaga la quinoa. Pica la cebolla finamente. Pica el ajo. Lava y corta las setas en rodajas. Las setas son ricas en selenio y compuestos antiinflamatorios.",
+                 "SOFRITO: En una olla grande, calienta 2 cucharadas de aceite de oliva a fuego medio. Añade la cebolla y cocina 5 minutos hasta que esté transparente. Añade el ajo y cocina 1 minuto más.",
+                 "AÑADIR QUINOA: Añade la quinoa y revuelve para cubrir con el aceite. Cocina 2 minutos hasta que la quinoa huela a nuez.",
+                 "COCCIÓN TIPO RISOTTO: Añade 1 taza de caldo vegetal caliente y revuelve constantemente. Cuando se absorba, añade otra taza. Repite hasta que la quinoa esté cocida (aproximadamente 20 minutos).",
+                 "AÑADIR SETAS: Mientras cocinas la quinoa, saltea las setas en otra sartén con 1 cucharada de aceite durante 8-10 minutos hasta que estén doradas.",
+                 "FINALIZAR: Cuando la quinoa esté lista, añade las setas salteadas y hierbas frescas picadas (tomillo, romero). Revuelve y sirve caliente."],
+                380, 14, 52, 14, 6, 3, 35),
+            
+            createEstherRecipe(119, "Ensalada de Garbanzos y Vegetales Asados", "Plato Principal", "Platos Principales", "Garbanzos", "400g (2 tazas cocidos)", 
+                [{name: "Calabacín", quantity: "1 mediano"}, {name: "Pimiento rojo", quantity: "1 mediano"}, {name: "Berenjena", quantity: "1 pequeña"}, {name: "Tomates cherry", quantity: "200g"}],
+                "Aceite de oliva extra virgen, limón, ajo y hierbas", "3 cucharadas de aceite + jugo de 1 limón + 1 diente de ajo + hierbas frescas",
+                ["ASADO DE VEGETALES: Precalienta el horno a 200°C. Corta el calabacín, pimiento y berenjena en cubos de 2 cm. Coloca en una bandeja, rocía con aceite de oliva y sazona. Ase 25-30 minutos hasta que estén tiernos y dorados.",
+                 "PREPARACIÓN DE GARBANZOS: Si usas garbanzos enlatados, escúrrelos y enjuágalos bien. Si son secos, remójalos y cocínalos hasta que estén tiernos.",
+                 "PREPARACIÓN DE TOMATES: Corta los tomates cherry por la mitad.",
+                 "ADEREZO: Combina aceite de oliva, jugo de limón, ajo picado finamente, hierbas frescas picadas (albahaca, perejil), sal y pimienta.",
+                 "ENSAMBLAJE: En un bol grande, combina los garbanzos, vegetales asados y tomates cherry. Vierte el aderezo y mezcla suavemente.",
+                 "SERVIR: Sirve a temperatura ambiente o ligeramente tibio. Este plato es rico en proteína vegetal, fibra y antioxidantes de los vegetales asados."],
+                420, 18, 48, 18, 16, 4, 40),
+            
+            // Más Jugos
+            createEstherRecipe(120, "Jugo Detox de Apio y Pepino", "Jugo", "Bebidas", "Apio", "4 tallos", 
+                [{name: "Pepino", quantity: "1 mediano"}, {name: "Espinaca", quantity: "1 taza"}, {name: "Limón", quantity: "1/2 unidad"}, {name: "Jengibre", quantity: "1 cm"}],
+                "Agua filtrada", "1/2 taza",
+                ["PREPARACIÓN: Lava el apio, pepino y espinaca. Pela el jengibre. Corta todo en trozos que quepan en el extractor.",
+                 "EXTRACCIÓN: Pasa todos los ingredientes por un extractor de jugo. Si no tienes extractor, licúa y cuela finamente.",
+                 "MEZCLAR: Combina el jugo extraído con el jugo de medio limón y media taza de agua. Mezcla bien.",
+                 "SERVIR: Bebe inmediatamente. Este jugo es extremadamente alcalinizante y antiinflamatorio. El apio contiene compuestos que reducen la inflamación, y la espinaca proporciona clorofila."],
+                35, 2, 6, 0, 3, 1, 5),
+            
+            createEstherRecipe(121, "Jugo de Piña y Jengibre", "Jugo", "Bebidas", "Piña", "2 tazas cortada", 
+                [{name: "Jengibre", quantity: "3 cm"}, {name: "Limón", quantity: "1/2 unidad"}, {name: "Menta fresca", quantity: "5-6 hojas"}],
+                "Agua filtrada", "1/2 taza",
+                ["PREPARACIÓN: Corta la piña en trozos. Pela el jengibre. Lava la menta.",
+                 "EXTRACCIÓN: Pasa la piña y jengibre por un extractor de jugo. Si no tienes extractor, licúa y cuela.",
+                 "MEZCLAR: Combina el jugo con el jugo de medio limón, las hojas de menta y media taza de agua. Mezcla bien.",
+                 "SERVIR: Bebe inmediatamente. La piña contiene bromelina, una enzima natural extremadamente antiinflamatoria. El jengibre potencia este efecto."],
+                120, 1, 28, 0, 2, 1, 5),
+            
+            // Más Smoothies
+            createEstherRecipe(122, "Smoothie de Espinaca y Mango", "Smoothie", "Bebidas", "Espinaca", "2 tazas", 
+                [{name: "Mango", quantity: "1 mediano"}, {name: "Plátano", quantity: "1 mediano"}, {name: "Jengibre", quantity: "1 cm"}, {name: "Semillas de chía", quantity: "1 cucharada"}],
+                "Leche de coco sin azúcar", "1 taza",
+                ["PREPARACIÓN: Lava la espinaca. Pela y corta el mango en trozos. Pela el plátano y córtalo en rodajas. Pela el jengibre.",
+                 "LICUADO: En una licuadora, combina la espinaca, mango, plátano, jengibre rallado, semillas de chía y 1 taza de leche de coco sin azúcar.",
+                 "PROCESAR: Licua a velocidad alta durante 1-2 minutos hasta que esté completamente suave y cremoso.",
+                 "SERVIR: Bebe inmediatamente. El mango es rico en betacarotenos y vitamina C, la espinaca en clorofila, y las semillas de chía en omega-3."],
+                280, 5, 48, 12, 10, 1, 5),
+            
+            createEstherRecipe(123, "Smoothie Verde Energizante", "Smoothie", "Bebidas", "Kale", "2 tazas", 
+                [{name: "Plátano", quantity: "1 mediano"}, {name: "Pera", quantity: "1 mediana"}, {name: "Jengibre", quantity: "2 cm"}, {name: "Cúrcuma", quantity: "1 cucharadita"}, {name: "Semillas de cáñamo", quantity: "1 cucharada"}],
+                "Agua de coco", "1 taza",
+                ["PREPARACIÓN: Lava el kale y retira los tallos duros. Pela el plátano y pera. Pela el jengibre.",
+                 "LICUADO: En una licuadora, combina el kale, plátano, pera, jengibre rallado, 1 cucharadita de cúrcuma, semillas de cáñamo (ricas en omega-3) y 1 taza de agua de coco.",
+                 "PROCESAR: Licua a velocidad alta durante 1-2 minutos hasta que esté completamente suave. El kale puede requerir más tiempo para licuarse completamente.",
+                 "SERVIR: Bebe inmediatamente. Este smoothie es extremadamente rico en antioxidantes, clorofila, cúrcuma antiinflamatoria y omega-3 de las semillas de cáñamo."],
+                240, 6, 38, 10, 8, 1, 5),
+            
+            // Más Postres
+            createEstherRecipe(124, "Trufas de Cacao y Almendras", "Postre", "Postres", "Almendras", "1 taza", 
+                [{name: "Dátiles", quantity: "1/2 taza (sin hueso)"}, {name: "Cacao en polvo sin azúcar", quantity: "3 cucharadas"}, {name: "Coco rallado", quantity: "2 cucharadas"}],
+                "Sin aderezo", "N/A",
+                ["PREPARACIÓN: Si los dátiles están duros, remójalos en agua tibia 10 minutos y escúrrelos. Elimina los huesos si los tienen.",
+                 "PROCESAR: En un procesador de alimentos, combina las almendras y procesa hasta que formen una harina gruesa (no demasiado fino o se convertirá en mantequilla).",
+                 "AÑADIR DÁTILES Y CACAO: Añade los dátiles y procesa hasta que se forme una pasta. Añade 3 cucharadas de cacao en polvo sin azúcar y procesa 30 segundos más hasta que esté bien mezclado.",
+                 "FORMAR TRUFAS: Con las manos limpias, forma bolas pequeñas de aproximadamente 2 cm de diámetro.",
+                 "CUBRIR: Rueda las trufas en coco rallado para cubrirlas.",
+                 "REPOSO: Refrigera durante al menos 30 minutos para que se firmen.",
+                 "SERVIR: Estas trufas son naturalmente dulces, ricas en grasas saludables de las almendras, y el cacao proporciona antioxidantes flavonoides."],
+                150, 4, 18, 10, 6, 12, 15),
+            
+            createEstherRecipe(125, "Barritas de Avena y Frutos Secos", "Postre", "Postres", "Avena sin gluten", "1 taza", 
+                [{name: "Almendras", quantity: "1/2 taza"}, {name: "Nueces", quantity: "1/4 taza"}, {name: "Dátiles", quantity: "1/2 taza"}, {name: "Semillas de chía", quantity: "2 cucharadas"}],
+                "Aceite de coco", "2 cucharadas",
+                ["PREPARACIÓN: Si los dátiles están duros, remójalos en agua tibia 10 minutos y escúrrelos. Elimina los huesos.",
+                 "PROCESAR FRUTOS SECOS: En un procesador, combina las almendras y nueces. Procesa hasta que estén picados pero no completamente molidos.",
+                 "AÑADIR DÁTILES: Añade los dátiles y procesa hasta que se forme una pasta pegajosa.",
+                 "MEZCLAR: En un bol, combina la avena, la mezcla de frutos secos y dátiles, semillas de chía, y 2 cucharadas de aceite de coco derretido. Mezcla bien con las manos.",
+                 "FORMAR BARRITAS: Presiona la mezcla en un molde rectangular forrado con papel de horno. Presiona firmemente para que se mantengan unidas.",
+                 "REPOSO: Refrigera durante al menos 2 horas (o toda la noche) hasta que estén firmes.",
+                 "CORTAR: Corta en barritas de aproximadamente 2x8 cm.",
+                 "SERVIR: Estas barritas son ricas en fibra, proteína, omega-3 de las semillas de chía, y naturalmente dulces de los dátiles."],
+                200, 6, 22, 12, 8, 8, 20),
+            
+            // Más Sopas
+            createEstherRecipe(126, "Sopa de Calabaza y Jengibre", "Sopa", "Sopas", "Calabaza", "500g", 
+                [{name: "Cebolla", quantity: "1 mediana"}, {name: "Ajo", quantity: "2 dientes"}, {name: "Jengibre", quantity: "2 cm"}, {name: "Cúrcuma", quantity: "1 cucharadita"}],
+                "Aceite de oliva extra virgen y caldo vegetal", "2 cucharadas de aceite + 4 tazas de caldo vegetal",
+                ["PREPARACIÓN: Pela y corta la calabaza en cubos de 2 cm. Pica la cebolla finamente. Pica el ajo y ralla el jengibre.",
+                 "SOFRITO: En una olla grande, calienta 2 cucharadas de aceite de oliva a fuego medio. Añade la cebolla y cocina 5 minutos. Añade el ajo, jengibre y 1 cucharadita de cúrcuma. Cocina 1 minuto más.",
+                 "AÑADIR CALABAZA: Añade los cubos de calabaza y revuelve para cubrir con las especias. Añade 4 tazas de caldo vegetal.",
+                 "COCCIÓN: Lleva a ebullición, luego reduce el fuego y cocina a fuego medio-bajo durante 20-25 minutos hasta que la calabaza esté muy tierna.",
+                 "LICUAR: Con cuidado (está caliente), licua la sopa hasta que esté completamente suave y cremosa.",
+                 "SERVIR: Sirve caliente. La calabaza es rica en betacarotenos, y la combinación con jengibre y cúrcuma crea un potente efecto antiinflamatorio."],
+                140, 3, 22, 6, 4, 4, 30),
+            
+            createEstherRecipe(127, "Sopa de Tomate y Albahaca", "Sopa", "Sopas", "Tomates", "800g (6-8 medianos)", 
+                [{name: "Cebolla", quantity: "1 mediana"}, {name: "Ajo", quantity: "3 dientes"}, {name: "Albahaca fresca", quantity: "1/4 taza"}, {name: "Orégano", quantity: "1 cucharadita"}],
+                "Aceite de oliva extra virgen y caldo vegetal", "2 cucharadas de aceite + 3 tazas de caldo vegetal",
+                ["PREPARACIÓN: Lava los tomates. Pica la cebolla finamente. Pica el ajo. Pica la albahaca fresca.",
+                 "ASAR TOMATES: Precalienta el horno a 200°C. Corta los tomates por la mitad y colócalos en una bandeja. Rocía con 1 cucharada de aceite de oliva. Ase 25-30 minutos hasta que estén tiernos y la piel se arrugue.",
+                 "SOFRITO: En una olla, calienta 1 cucharada de aceite a fuego medio. Añade la cebolla y cocina 5 minutos. Añade el ajo y cocina 1 minuto más.",
+                 "AÑADIR TOMATES: Añade los tomates asados (puedes pelar la piel si prefieres), 3 tazas de caldo vegetal, y 1 cucharadita de orégano.",
+                 "COCCIÓN: Lleva a ebullición, luego reduce el fuego y cocina 15 minutos.",
+                 "LICUAR Y FINALIZAR: Licua la sopa hasta que esté suave. Añade la albahaca fresca picada justo antes de servir.",
+                 "SERVIR: Sirve caliente. Los tomates son ricos en licopeno (especialmente cuando se cocinan), y la albahaca contiene compuestos antiinflamatorios."],
+                110, 3, 18, 6, 4, 4, 40),
+            
+            // Snacks/Desayunos
+            createEstherRecipe(128, "Avena Overnight con Bayas", "Desayuno", "Desayunos", "Avena sin gluten", "1/2 taza", 
+                [{name: "Arándanos", quantity: "1/2 taza"}, {name: "Fresas", quantity: "1/2 taza"}, {name: "Semillas de chía", quantity: "1 cucharada"}, {name: "Almendras", quantity: "2 cucharadas picadas"}],
+                "Leche de almendras sin azúcar", "1 taza",
+                ["PREPARACIÓN: Lava las bayas. Pica las almendras groseramente.",
+                 "MEZCLAR: En un frasco o bol, combina la avena, 1 cucharada de semillas de chía, y 1 taza de leche de almendras sin azúcar. Mezcla bien.",
+                 "AÑADIR BAYAS: Añade las bayas frescas y las almendras picadas. Revuelve suavemente.",
+                 "REPOSO: Refrigera durante al menos 4 horas (o toda la noche) hasta que la avena haya absorbido el líquido.",
+                 "SERVIR: Sirve frío. Esta avena es rica en fibra, antioxidantes de las bayas, omega-3 de las semillas de chía, y grasas saludables de las almendras."],
+                320, 10, 42, 14, 12, 1, 5),
+            
+            createEstherRecipe(129, "Pudding de Semillas de Chía con Mango", "Desayuno", "Desayunos", "Semillas de chía", "1/4 taza", 
+                [{name: "Mango", quantity: "1 mediano"}, {name: "Coco rallado", quantity: "1 cucharada"}],
+                "Leche de coco sin azúcar", "1 taza",
+                ["PREPARACIÓN: Pela y corta el mango en cubos pequeños.",
+                 "MEZCLAR: En un frasco, combina 1/4 taza de semillas de chía con 1 taza de leche de coco sin azúcar. Mezcla bien con un batidor.",
+                 "REPOSO: Deja reposar 10 minutos, luego remueve nuevamente. Refrigera durante al menos 4 horas (o toda la noche).",
+                 "SERVIR: Antes de servir, remueve una vez más. Añade los cubos de mango y espolvorea con coco rallado. Las semillas de chía son ricas en omega-3, fibra y proteína."],
+                280, 8, 32, 16, 15, 1, 5),
+            
+            createEstherRecipe(130, "Hummus de Garbanzos Casero", "Snack", "Snacks", "Garbanzos", "400g (2 tazas cocidos)", 
+                [{name: "Ajo", quantity: "2 dientes"}, {name: "Limón", quantity: "1 unidad"}, {name: "Tahini", quantity: "2 cucharadas"}, {name: "Comino", quantity: "1 cucharadita"}],
+                "Aceite de oliva extra virgen", "3 cucharadas",
+                ["PREPARACIÓN: Si usas garbanzos enlatados, escúrrelos y enjuágalos bien. Si son secos, remójalos y cocínalos hasta que estén tiernos.",
+                 "PROCESAR: En un procesador de alimentos, combina los garbanzos, 2 dientes de ajo, el jugo de 1 limón, 2 cucharadas de tahini (pasta de sésamo), 1 cucharadita de comino molido, y 3 cucharadas de aceite de oliva.",
+                 "PROCESAR: Procesa durante 2-3 minutos hasta que esté completamente suave. Si está muy espeso, añade 1-2 cucharadas de agua hasta alcanzar la consistencia deseada.",
+                 "SERVIR: Sirve con vegetales crudos (zanahorias, pepino, apio) o como acompañamiento. El hummus es rico en proteína vegetal, fibra, y el tahini proporciona grasas saludables."],
+                180, 8, 18, 10, 8, 6, 10),
+        ];
+
         // --- APP LOGIC ---
 
         const app = {
             state: {
                 salads: allSalads,
                 filtered: allSalads,
+                estherRecipes: estherRecipes,
+                estherFiltered: estherRecipes,
                 currentPage: 1,
+                estherCurrentPage: 1,
                 itemsPerPage: 12,
                 currentCategory: 'all',
+                estherCurrentCategory: 'all',
                 searchTerm: '',
-                darkMode: localStorage.getItem('darkMode') === 'true' || false
+                estherSearchTerm: '',
+                darkMode: localStorage.getItem('darkMode') === 'true' || false,
+                currentSection: 'atlas' // 'atlas' or 'esther'
             },
 
             init() {
                 this.applyDarkMode();
-                this.renderCategories();
-                this.renderCharts();
-                this.updateGrid();
+                this.switchSection('atlas');
                 this.setupListeners();
+            },
+
+            switchSection(section) {
+                this.state.currentSection = section;
+                
+                if (section === 'atlas') {
+                    document.getElementById('atlasSection').classList.remove('hidden');
+                    document.getElementById('estherSection').classList.add('hidden');
+                    document.getElementById('tabAtlas').classList.add('active', 'bg-leaf-500');
+                    document.getElementById('tabAtlas').classList.remove('bg-slate-300');
+                    document.getElementById('tabEsther').classList.remove('active', 'bg-purple-500');
+                    document.getElementById('tabEsther').classList.add('bg-slate-300');
+                    document.getElementById('headerTitle').textContent = 'Atlas de Ensaladas';
+                    document.getElementById('headerSubtitle').textContent = '150 Recetas e Ideas';
+                    document.getElementById('headerIcon').innerHTML = '<i class="fas fa-carrot text-xl"></i>';
+                    document.getElementById('randomBtn').onclick = () => this.getRandomSalad();
+                    this.renderCategories();
+                    this.renderCharts();
+                    this.updateGrid();
+                } else {
+                    document.getElementById('atlasSection').classList.add('hidden');
+                    document.getElementById('estherSection').classList.remove('hidden');
+                    document.getElementById('tabEsther').classList.add('active', 'bg-purple-500');
+                    document.getElementById('tabEsther').classList.remove('bg-slate-300');
+                    document.getElementById('tabAtlas').classList.remove('active', 'bg-leaf-500');
+                    document.getElementById('tabAtlas').classList.add('bg-slate-300');
+                    document.getElementById('headerTitle').textContent = 'Recetas Esther';
+                    document.getElementById('headerSubtitle').textContent = 'Recetas 100% Antiinflamatorias';
+                    document.getElementById('headerIcon').innerHTML = '<i class="fas fa-heart text-xl"></i>';
+                    document.getElementById('randomBtn').onclick = () => this.getRandomEsther();
+                    this.renderEstherCategories();
+                    this.updateEstherGrid();
+                }
             },
 
             toggleDarkMode() {
@@ -1059,18 +1496,25 @@
             },
 
             setupListeners() {
-                // Search
+                // Search - Atlas
                 document.getElementById('searchInput').addEventListener('input', (e) => {
                     this.state.searchTerm = e.target.value.toLowerCase();
                     this.state.currentPage = 1;
                     this.filterData();
                 });
 
-                // Category Buttons
+                // Search - Esther
+                document.getElementById('estherSearchInput').addEventListener('input', (e) => {
+                    this.state.estherSearchTerm = e.target.value.toLowerCase();
+                    this.state.estherCurrentPage = 1;
+                    this.filterEstherData();
+                });
+
+                // Category Buttons - Atlas
                 document.getElementById('categoryFilters').addEventListener('click', (e) => {
                     if(e.target.classList.contains('filter-btn')) {
                         // UI update
-                        document.querySelectorAll('.filter-btn').forEach(b => {
+                        document.querySelectorAll('#categoryFilters .filter-btn').forEach(b => {
                             b.classList.remove('bg-slate-800', 'dark:bg-slate-700', 'text-white');
                             b.classList.add('bg-white', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-100', 'dark:hover:bg-slate-600', 'border', 'border-slate-200', 'dark:border-slate-600');
                         });
@@ -1081,6 +1525,24 @@
                         this.state.currentCategory = e.target.dataset.category;
                         this.state.currentPage = 1;
                         this.filterData();
+                    }
+                });
+
+                // Category Buttons - Esther
+                document.getElementById('estherCategoryFilters').addEventListener('click', (e) => {
+                    if(e.target.classList.contains('filter-btn')) {
+                        // UI update
+                        document.querySelectorAll('#estherCategoryFilters .filter-btn').forEach(b => {
+                            b.classList.remove('bg-purple-800', 'dark:bg-purple-700', 'text-white');
+                            b.classList.add('bg-white', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-100', 'dark:hover:bg-slate-600', 'border', 'border-slate-200', 'dark:border-slate-600');
+                        });
+                        e.target.classList.remove('bg-white', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300', 'hover:bg-slate-100', 'dark:hover:bg-slate-600', 'border', 'border-slate-200', 'dark:border-slate-600');
+                        e.target.classList.add('bg-purple-800', 'dark:bg-purple-600', 'text-white');
+
+                        // Logic
+                        this.state.estherCurrentCategory = e.target.dataset.category;
+                        this.state.estherCurrentPage = 1;
+                        this.filterEstherData();
                     }
                 });
             },
@@ -1273,6 +1735,119 @@
             getRandomSalad() {
                 const random = this.state.salads[Math.floor(Math.random() * this.state.salads.length)];
                 this.openModal(random);
+            },
+
+            getRandomEsther() {
+                const random = this.state.estherRecipes[Math.floor(Math.random() * this.state.estherRecipes.length)];
+                this.openModal(random);
+            },
+
+            // Esther Section Functions
+            renderEstherCategories() {
+                const container = document.getElementById('estherCategoryFilters');
+                container.innerHTML = '<button class="filter-btn active bg-purple-800 dark:bg-purple-700 text-white px-4 py-2 rounded-full text-sm whitespace-nowrap transition" data-category="all">Todas</button>';
+                const uniqueCats = [...new Set(this.state.estherRecipes.map(r => r.category))];
+                uniqueCats.forEach(cat => {
+                    const btn = document.createElement('button');
+                    btn.className = 'filter-btn bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 px-4 py-2 rounded-full text-sm whitespace-nowrap transition';
+                    btn.dataset.category = cat;
+                    btn.textContent = cat;
+                    container.appendChild(btn);
+                });
+            },
+
+            filterEstherData() {
+                const term = this.state.estherSearchTerm;
+                const cat = this.state.estherCurrentCategory;
+
+                this.state.estherFiltered = this.state.estherRecipes.filter(recipe => {
+                    const matchesSearch = recipe.name.toLowerCase().includes(term) || 
+                                          recipe.ingredients.some(i => i.name.toLowerCase().includes(term)) ||
+                                          recipe.base.name.toLowerCase().includes(term) ||
+                                          (recipe.type && recipe.type.toLowerCase().includes(term));
+                    const matchesCat = cat === 'all' || recipe.category === cat;
+                    return matchesSearch && matchesCat;
+                });
+
+                document.getElementById('estherResultCount').textContent = `Mostrando ${this.state.estherFiltered.length} recetas antiinflamatorias`;
+                this.updateEstherGrid();
+            },
+
+            updateEstherGrid() {
+                const grid = document.getElementById('estherGrid');
+                grid.innerHTML = '';
+
+                const start = (this.state.estherCurrentPage - 1) * this.state.itemsPerPage;
+                const end = start + this.state.itemsPerPage;
+                const pageItems = this.state.estherFiltered.slice(start, end);
+
+                if (pageItems.length === 0) {
+                    grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 dark:text-slate-500 text-lg">No se encontraron recetas con esos criterios.</div>`;
+                    return;
+                }
+
+                pageItems.forEach(recipe => {
+                    const card = document.createElement('div');
+                    card.className = 'salad-card bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-purple-100 dark:border-purple-900 overflow-hidden cursor-pointer flex flex-col h-full';
+                    card.onclick = () => this.openModal(recipe);
+                    
+                    let icon = 'fa-heart';
+                    if(recipe.type === 'Jugo' || recipe.type === 'Smoothie') icon = 'fa-glass-water';
+                    if(recipe.type === 'Postre') icon = 'fa-cookie-bite';
+                    if(recipe.type === 'Sopa') icon = 'fa-bowl-food';
+                    if(recipe.type === 'Plato Principal') icon = 'fa-utensils';
+                    if(recipe.type === 'Ensalada') icon = 'fa-leaf';
+
+                    const ingredientsList = recipe.ingredients.map(i => i.name).join(', ');
+
+                    card.innerHTML = `
+                        <div class="h-32 bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-300 dark:text-purple-700 relative overflow-hidden">
+                            <i class="fas ${icon} text-6xl opacity-20 transform rotate-12"></i>
+                            <div class="absolute top-2 right-2 bg-white dark:bg-slate-800/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-purple-600 dark:text-purple-300 shadow-sm">
+                                ${recipe.time} min
+                            </div>
+                        </div>
+                        <div class="p-5 flex-grow flex flex-col">
+                            <span class="text-xs uppercase tracking-wide text-purple-600 dark:text-purple-400 font-bold mb-1">${recipe.type || 'Receta'} • ${recipe.category}</span>
+                            <h3 class="font-serif text-xl font-bold text-slate-800 dark:text-slate-200 mb-2 leading-tight">${recipe.name}</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2 flex-grow">${recipe.base.name} con ${ingredientsList}.</p>
+                            <div class="pt-4 border-t border-slate-100 dark:border-slate-700 mt-auto flex justify-between items-center text-xs text-slate-400 dark:text-slate-500">
+                                <span><i class="fas fa-carrot mr-1"></i> ${recipe.ingredients.length} Ingredientes</span>
+                                <span><i class="fas fa-fire mr-1"></i> ~${recipe.nutrition.calories} kcal</span>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                this.renderEstherPagination();
+            },
+
+            renderEstherPagination() {
+                const container = document.getElementById('estherPaginationControls');
+                container.innerHTML = '';
+                
+                const totalPages = Math.ceil(this.state.estherFiltered.length / this.state.itemsPerPage);
+                if (totalPages <= 1) return;
+
+                const prevBtn = document.createElement('button');
+                prevBtn.className = `px-3 py-1 rounded border ${this.state.estherCurrentPage === 1 ? 'text-slate-300 dark:text-slate-600 border-slate-200 dark:border-slate-700 cursor-not-allowed' : 'text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 bg-white dark:bg-slate-800'}`;
+                prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                prevBtn.disabled = this.state.estherCurrentPage === 1;
+                prevBtn.onclick = () => { if(this.state.estherCurrentPage > 1) { this.state.estherCurrentPage--; this.updateEstherGrid(); document.getElementById('estherGrid').scrollIntoView({behavior:'smooth'}); }};
+                container.appendChild(prevBtn);
+
+                const info = document.createElement('span');
+                info.className = "px-4 py-1 text-slate-500 dark:text-slate-400 text-sm flex items-center";
+                info.innerText = `Pág ${this.state.estherCurrentPage} de ${totalPages}`;
+                container.appendChild(info);
+
+                const nextBtn = document.createElement('button');
+                nextBtn.className = `px-3 py-1 rounded border ${this.state.estherCurrentPage === totalPages ? 'text-slate-300 dark:text-slate-600 border-slate-200 dark:border-slate-700 cursor-not-allowed' : 'text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 bg-white dark:bg-slate-800'}`;
+                nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                nextBtn.disabled = this.state.estherCurrentPage === totalPages;
+                nextBtn.onclick = () => { if(this.state.estherCurrentPage < totalPages) { this.state.estherCurrentPage++; this.updateEstherGrid(); document.getElementById('estherGrid').scrollIntoView({behavior:'smooth'}); }};
+                container.appendChild(nextBtn);
             },
 
             renderCharts() {
