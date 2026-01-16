@@ -106,23 +106,23 @@
             </div>
             <!-- Header Content -->
             <div class="flex justify-between items-center">
-                <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3">
                     <div id="headerIcon" class="bg-leaf-100 dark:bg-leaf-900 p-2 rounded-full text-leaf-700 dark:text-leaf-400">
-                        <i class="fas fa-carrot text-xl"></i>
-                    </div>
-                    <div>
+                    <i class="fas fa-carrot text-xl"></i>
+                </div>
+                <div>
                         <h1 id="headerTitle" class="font-serif text-2xl font-bold text-leaf-900 dark:text-leaf-400 leading-none">Atlas de Ensaladas</h1>
                         <p id="headerSubtitle" class="text-xs text-slate-500 dark:text-slate-400 font-medium">150 Recetas e Ideas</p>
-                    </div>
                 </div>
+            </div>
                 <div class="flex items-center gap-3">
                     <button id="darkModeToggle" onclick="app.toggleDarkMode()" class="bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-4 py-2 rounded-lg transition items-center gap-2 text-sm font-semibold shadow-sm hover:bg-slate-300 dark:hover:bg-slate-600">
                         <i class="fas fa-moon dark:hidden"></i>
                         <i class="fas fa-sun hidden dark:inline"></i>
                     </button>
                     <button id="randomBtn" onclick="app.getRandomSalad()" class="hidden md:flex bg-leaf-500 hover:bg-leaf-700 text-white px-4 py-2 rounded-lg transition items-center gap-2 text-sm font-semibold shadow-sm">
-                        <i class="fas fa-random"></i> ¡Sorpréndeme!
-                    </button>
+                <i class="fas fa-random"></i> ¡Sorpréndeme!
+            </button>
                 </div>
             </div>
         </div>
@@ -272,57 +272,57 @@
                             <span id="modalCategory" class="text-xs font-bold tracking-wider text-white uppercase bg-white/20 backdrop-blur px-2 py-1 rounded-md mb-2 inline-block">Categoría</span>
                             <h3 class="text-2xl font-serif font-bold text-white drop-shadow-lg" id="modalTitle">Título de la Ensalada</h3>
                             <div class="mt-2 flex flex-wrap gap-2 text-xs" id="modalQuickInfo"></div>
-                        </div>
+                    </div>
                         <button type="button" class="absolute top-4 right-4 text-white hover:text-slate-200 focus:outline-none bg-black/40 backdrop-blur rounded-full p-2 transition" onclick="app.closeModal()">
-                            <span class="sr-only">Cerrar</span>
-                            <i class="fas fa-times text-xl"></i>
-                        </button>
+                        <span class="sr-only">Cerrar</span>
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
                     </div>
                 </div>
 
                 <!-- Modal Body (Scrollable) -->
                 <div class="px-6 py-6 overflow-y-auto ingredients-scroll flex-grow">
-                    <div class="space-y-6">
+                        <div class="space-y-6">
                         <!-- Nutritional Info -->
                         <div id="modalNutrition" class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-200 dark:border-slate-700">
                             <!-- Will be populated by JS -->
                         </div>
 
                         <!-- Base -->
-                        <div>
+                            <div>
                             <h4 class="flex items-center text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wide mb-3">
-                                <i class="fas fa-layer-group text-leaf-500 mr-2"></i> La Base
-                            </h4>
+                                    <i class="fas fa-layer-group text-leaf-500 mr-2"></i> La Base
+                                </h4>
                             <p id="modalBase" class="text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/50 p-3 rounded-lg border border-slate-100 dark:border-slate-700"></p>
-                        </div>
+                            </div>
 
                         <!-- Ingredients with Quantities -->
-                        <div>
+                            <div>
                             <h4 class="flex items-center text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wide mb-3">
                                 <i class="fas fa-carrot text-leaf-500 mr-2"></i> Ingredientes y Cantidades
-                            </h4>
+                                </h4>
                             <ul id="modalIngredients" class="space-y-2 text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700">
-                                <!-- List items -->
-                            </ul>
+                                    <!-- List items -->
+                                </ul>
                         </div>
 
                         <!-- Dressing -->
-                        <div>
+                             <div>
                             <h4 class="flex items-center text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wide mb-3">
-                                <i class="fas fa-fill-drip text-leaf-500 mr-2"></i> El Aderezo
-                            </h4>
+                                    <i class="fas fa-fill-drip text-leaf-500 mr-2"></i> El Aderezo
+                                </h4>
                             <div id="modalDressing" class="text-slate-700 dark:text-slate-300 bg-orange-50 dark:bg-orange-900/20 p-3 rounded-lg border border-orange-100 dark:border-orange-900/50 border-l-4 border-l-orange-300 dark:border-l-orange-600"></div>
-                        </div>
+                            </div>
 
                         <!-- Preparation Steps -->
-                        <div>
+                             <div>
                             <h4 class="flex items-center text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wide mb-3">
                                 <i class="fas fa-stopwatch text-leaf-500 mr-2"></i> Preparación Paso a Paso
-                            </h4>
+                                </h4>
                             <ol id="modalPrep" class="space-y-3 text-slate-600 dark:text-slate-300 text-sm leading-relaxed bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg border border-slate-100 dark:border-slate-700">
                                 <!-- Steps will be populated -->
                             </ol>
-                        </div>
+                            </div>
 
                         <!-- Serving Info -->
                         <div id="modalServing" class="text-xs text-slate-500 dark:text-slate-400 italic bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg border border-blue-100 dark:border-blue-900/50">
@@ -355,21 +355,52 @@
 
         const bases = ["Lechuga Romana", "Espinaca Baby", "Rúcula", "Mezclum", "Kale", "Pasta Corta", "Quinoa", "Arroz Integral", "Lentejas", "Garbanzos", "Repollo"];
         
-        // Helper function to generate image URLs from Unsplash based on ingredients
+        // Helper function to generate image URLs - Using real food images from Unsplash
         // Made global so it can be used in modal
         window.getRecipeImage = function(recipeName, baseName, ingredients) {
-            // Create a search term from the recipe name and main ingredients
-            const mainIngredient = ingredients && ingredients.length > 0 ? ingredients[0].name : baseName;
-            const searchTerm = encodeURIComponent(`${recipeName} ${mainIngredient} food`);
-            // Use Unsplash Source API (no API key needed for basic usage)
-            const width = 800;
-            const height = 600;
-            return `https://source.unsplash.com/${width}x${height}/?${searchTerm}`;
+            // Create a consistent hash from recipe name for deterministic images
+            const hash = recipeName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            
+            // Use Unsplash Images API with specific photo IDs (curated food photos)
+            // These are real food photos that will always load
+            const foodPhotoIds = [
+                '1546069901-ba9c9c9f77f2', // Fresh salad
+                '1540185549336-e6e99f3679a6', // Pasta dish
+                '1512621776951-a57141f2eefd', // Healthy bowl
+                '1504674900247-0877df9cc836', // Colorful food
+                '1490645935967-10de6ba17061', // Salad bowl
+                '1505252585461-04c58a57d4b2', // Fresh ingredients
+                '1506361921092-3b328c27b44d', // Healthy meal
+                '1495521821757-a1efb6729352', // Food preparation
+                '1512058564363-2885b4e2b5b1', // Delicious food
+                '1504674900247-0877df9cc836', // Food platter
+                '1546069901-ba9c9c9f77f2', // Fresh vegetables
+                '1540185549336-e6e99f3679a6', // Gourmet dish
+            ];
+            
+            const photoId = foodPhotoIds[hash % foodPhotoIds.length];
+            // Use Unsplash Images API format (works without API key for basic usage)
+            return `https://images.unsplash.com/photo-${photoId}?w=800&h=600&fit=crop&auto=format&q=80`;
         };
 
         window.getIngredientImage = function(ingredientName) {
-            const searchTerm = encodeURIComponent(`${ingredientName} food ingredient`);
-            return `https://source.unsplash.com/200x200/?${searchTerm}`;
+            // Create a consistent hash for ingredient images
+            const hash = ingredientName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+            
+            // Use Unsplash Images API with ingredient-specific photo IDs
+            const ingredientPhotoIds = [
+                '1505252585461-04c58a57d4b2', // Fresh vegetables
+                '1512621776951-a57141f2eefd', // Produce
+                '1506361921092-3b328c27b44d', // Ingredients
+                '1495521821757-a1efb6729352', // Fresh food
+                '1546069901-ba9c9c9f77f2', // Vegetables
+                '1504674900247-0877df9cc836', // Food items
+                '1490645935967-10de6ba17061', // Fresh produce
+                '1512058564363-2885b4e2b5b1', // Ingredients
+            ];
+            
+            const photoId = ingredientPhotoIds[hash % ingredientPhotoIds.length];
+            return `https://images.unsplash.com/photo-${photoId}?w=200&h=200&fit=crop&auto=format&q=80`;
         };
 
         // Helper to create a salad object with enhanced data
@@ -1502,9 +1533,9 @@
                     document.getElementById('headerSubtitle').textContent = '150 Recetas e Ideas';
                     document.getElementById('headerIcon').innerHTML = '<i class="fas fa-carrot text-xl"></i>';
                     document.getElementById('randomBtn').onclick = () => this.getRandomSalad();
-                    this.renderCategories();
-                    this.renderCharts();
-                    this.updateGrid();
+                this.renderCategories();
+                this.renderCharts();
+                this.updateGrid();
                 } else {
                     document.getElementById('atlasSection').classList.add('hidden');
                     document.getElementById('estherSection').classList.remove('hidden');
@@ -1631,7 +1662,7 @@
                     if(salad.category.includes('Proteica')) icon = 'fa-drumstick-bite';
 
                     const ingredientsList = salad.ingredients.map(i => i.name).join(', ');
-                    const imageUrl = salad.image || `https://source.unsplash.com/800x600/?${encodeURIComponent(salad.name + ' food')}`;
+                    const imageUrl = salad.image || getRecipeImage(salad.name, salad.base.name, salad.ingredients);
 
                     card.innerHTML = `
                         <div class="h-32 bg-leaf-50 dark:bg-leaf-900/30 relative overflow-hidden">
@@ -1857,7 +1888,7 @@
                     if(recipe.type === 'Ensalada') icon = 'fa-leaf';
 
                     const ingredientsList = recipe.ingredients.map(i => i.name).join(', ');
-                    const imageUrl = recipe.image || `https://source.unsplash.com/800x600/?${encodeURIComponent(recipe.name + ' food')}`;
+                    const imageUrl = recipe.image || getRecipeImage(recipe.name, recipe.base.name, recipe.ingredients);
 
                     card.innerHTML = `
                         <div class="h-32 bg-purple-50 dark:bg-purple-900/30 relative overflow-hidden">
