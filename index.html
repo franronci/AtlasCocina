@@ -262,17 +262,22 @@
         <div class="relative z-10 flex min-h-full items-center justify-center p-4 text-center sm:p-0">
             <div class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-slate-800 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-3xl max-h-[90vh] flex flex-col">
                 
-                <!-- Modal Header -->
-                <div class="bg-leaf-50 dark:bg-leaf-900/30 px-6 py-4 border-b border-leaf-100 dark:border-slate-700 flex justify-between items-start">
-                    <div>
-                        <span id="modalCategory" class="text-xs font-bold tracking-wider text-leaf-700 dark:text-leaf-400 uppercase bg-leaf-100 dark:bg-leaf-900 px-2 py-1 rounded-md mb-2 inline-block">Categoría</span>
-                        <h3 class="text-2xl font-serif font-bold text-slate-800 dark:text-slate-200" id="modalTitle">Título de la Ensalada</h3>
-                        <div class="mt-2 flex flex-wrap gap-2 text-xs" id="modalQuickInfo"></div>
+                <!-- Modal Header with Image -->
+                <div class="bg-leaf-50 dark:bg-leaf-900/30 border-b border-leaf-100 dark:border-slate-700">
+                    <!-- Recipe Main Image -->
+                    <div class="h-64 w-full relative overflow-hidden">
+                        <img id="modalMainImage" src="" alt="" class="w-full h-full object-cover" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute bottom-4 left-6 right-6">
+                            <span id="modalCategory" class="text-xs font-bold tracking-wider text-white uppercase bg-white/20 backdrop-blur px-2 py-1 rounded-md mb-2 inline-block">Categoría</span>
+                            <h3 class="text-2xl font-serif font-bold text-white drop-shadow-lg" id="modalTitle">Título de la Ensalada</h3>
+                            <div class="mt-2 flex flex-wrap gap-2 text-xs" id="modalQuickInfo"></div>
+                        </div>
+                        <button type="button" class="absolute top-4 right-4 text-white hover:text-slate-200 focus:outline-none bg-black/40 backdrop-blur rounded-full p-2 transition" onclick="app.closeModal()">
+                            <span class="sr-only">Cerrar</span>
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
                     </div>
-                    <button type="button" class="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-none" onclick="app.closeModal()">
-                        <span class="sr-only">Cerrar</span>
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
                 </div>
 
                 <!-- Modal Body (Scrollable) -->
@@ -350,16 +355,43 @@
 
         const bases = ["Lechuga Romana", "Espinaca Baby", "Rúcula", "Mezclum", "Kale", "Pasta Corta", "Quinoa", "Arroz Integral", "Lentejas", "Garbanzos", "Repollo"];
         
+        // Helper function to generate image URLs from Unsplash based on ingredients
+        // Made global so it can be used in modal
+        window.getRecipeImage = function(recipeName, baseName, ingredients) {
+            // Create a search term from the recipe name and main ingredients
+            const mainIngredient = ingredients && ingredients.length > 0 ? ingredients[0].name : baseName;
+            const searchTerm = encodeURIComponent(`${recipeName} ${mainIngredient} food`);
+            // Use Unsplash Source API (no API key needed for basic usage)
+            const width = 800;
+            const height = 600;
+            return `https://source.unsplash.com/${width}x${height}/?${searchTerm}`;
+        };
+
+        window.getIngredientImage = function(ingredientName) {
+            const searchTerm = encodeURIComponent(`${ingredientName} food ingredient`);
+            return `https://source.unsplash.com/200x200/?${searchTerm}`;
+        };
+
         // Helper to create a salad object with enhanced data
-        const createSalad = (id, name, cat, base, baseQty, ings, dressing, dressingQty, prepSteps, cal, protein, carbs, fat, fiber, servings, time) => ({
-            id, name, category: cat, 
-            base: { name: base, quantity: baseQty },
-            ingredients: ings, // Array of {name, quantity}
-            dressing: { name: dressing, quantity: dressingQty },
-            preparation: prepSteps, // Array of step strings
-            nutrition: { calories: cal, protein, carbs, fat, fiber },
-            servings, time
-        });
+        const createSalad = (id, name, cat, base, baseQty, ings, dressing, dressingQty, prepSteps, cal, protein, carbs, fat, fiber, servings, time) => {
+            const recipe = {
+                id, name, category: cat, 
+                base: { name: base, quantity: baseQty },
+                ingredients: ings, // Array of {name, quantity}
+                dressing: { name: dressing, quantity: dressingQty },
+                preparation: prepSteps, // Array of step strings
+                nutrition: { calories: cal, protein, carbs, fat, fiber },
+                servings, time
+            };
+            // Add image URL
+            recipe.image = getRecipeImage(name, base, ings);
+            // Add ingredient images
+            recipe.ingredientImages = ings.map(ing => ({
+                name: ing.name,
+                image: getIngredientImage(ing.name)
+            }));
+            return recipe;
+        };
 
         // The Dataset (Truncated/Procedurally expanded for the example to hit 150 logic)
         // I will define ~50 core unique recipes and then use a generator for variations to ensure 150 distinct usable ideas.
@@ -1081,15 +1113,25 @@
 
         // --- RECETAS ESTHER - ANTIINFLAMATORIAS ---
         // Helper para crear recetas Esther (más flexible, permite diferentes tipos)
-        const createEstherRecipe = (id, name, type, cat, base, baseQty, ings, dressing, dressingQty, prepSteps, cal, protein, carbs, fat, fiber, servings, time) => ({
-            id, name, type, category: cat, 
-            base: { name: base, quantity: baseQty },
-            ingredients: ings,
-            dressing: { name: dressing, quantity: dressingQty },
-            preparation: prepSteps,
-            nutrition: { calories: cal, protein, carbs, fat, fiber },
-            servings, time
-        });
+        const createEstherRecipe = (id, name, type, cat, base, baseQty, ings, dressing, dressingQty, prepSteps, cal, protein, carbs, fat, fiber, servings, time) => {
+            const recipe = {
+                id, name, type, category: cat, 
+                base: { name: base, quantity: baseQty },
+                ingredients: ings,
+                dressing: { name: dressing, quantity: dressingQty },
+                preparation: prepSteps,
+                nutrition: { calories: cal, protein, carbs, fat, fiber },
+                servings, time
+            };
+            // Add image URL
+            recipe.image = getRecipeImage(name, base, ings);
+            // Add ingredient images
+            recipe.ingredientImages = ings.map(ing => ({
+                name: ing.name,
+                image: getIngredientImage(ing.name)
+            }));
+            return recipe;
+        };
 
         // Recetas Esther - Variedad completa antiinflamatoria
         // Primero extraer las ensaladas Esther del array principal
@@ -1589,10 +1631,11 @@
                     if(salad.category.includes('Proteica')) icon = 'fa-drumstick-bite';
 
                     const ingredientsList = salad.ingredients.map(i => i.name).join(', ');
+                    const imageUrl = salad.image || `https://source.unsplash.com/800x600/?${encodeURIComponent(salad.name + ' food')}`;
 
                     card.innerHTML = `
-                        <div class="h-32 bg-leaf-50 dark:bg-leaf-900/30 flex items-center justify-center text-leaf-300 dark:text-leaf-700 relative overflow-hidden">
-                            <i class="fas ${icon} text-6xl opacity-20 transform rotate-12"></i>
+                        <div class="h-32 bg-leaf-50 dark:bg-leaf-900/30 relative overflow-hidden">
+                            <img src="${imageUrl}" alt="${salad.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('flex', 'items-center', 'justify-center'); this.parentElement.innerHTML='<i class=\\'fas ${icon} text-6xl opacity-20 transform rotate-12\\'></i>';">
                             <div class="absolute top-2 right-2 bg-white dark:bg-slate-800/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-slate-600 dark:text-slate-300 shadow-sm">
                                 ${salad.time} min
                             </div>
@@ -1661,14 +1704,29 @@
                 document.getElementById('modalCategory').textContent = salad.category;
                 document.getElementById('modalBase').innerHTML = `<strong>${salad.base.name}</strong><br><span class="text-sm text-slate-500 dark:text-slate-400">${salad.base.quantity}</span>`;
                 
-                // Ingredients with quantities
+                // Main recipe image
+                const mainImage = document.getElementById('modalMainImage');
+                const imageUrl = salad.image || getRecipeImage(salad.name, salad.base.name, salad.ingredients);
+                mainImage.src = imageUrl;
+                mainImage.alt = salad.name;
+                mainImage.onerror = function() {
+                    this.src = `https://source.unsplash.com/800x600/?${encodeURIComponent(salad.name + ' food')}`;
+                };
+                
+                // Ingredients with quantities and images
                 const ingList = document.getElementById('modalIngredients');
-                ingList.innerHTML = salad.ingredients.map(i => 
-                    `<li class="flex items-start justify-between py-2 border-b border-slate-200 dark:border-slate-700 last:border-0">
-                        <span class="flex items-start flex-1"><i class="fas fa-check text-leaf-500 dark:text-leaf-400 mt-1 mr-2 text-xs"></i><span>${i.name}</span></span>
-                        <span class="text-sm text-slate-500 dark:text-slate-400 font-medium ml-2">${i.quantity}</span>
-                    </li>`
-                ).join('');
+                ingList.innerHTML = salad.ingredients.map(i => {
+                    const ingImage = salad.ingredientImages?.find(img => img.name === i.name)?.image || getIngredientImage(i.name);
+                    return `<li class="flex items-start justify-between py-3 border-b border-slate-200 dark:border-slate-700 last:border-0">
+                        <span class="flex items-start flex-1">
+                            <img src="${ingImage}" alt="${i.name}" class="w-12 h-12 object-cover rounded-lg mr-3 flex-shrink-0" loading="lazy" onerror="this.style.display='none';">
+                            <div class="flex-1">
+                                <span class="font-medium text-slate-800 dark:text-slate-200">${i.name}</span>
+                                <span class="block text-sm text-slate-500 dark:text-slate-400 mt-1">${i.quantity}</span>
+                            </div>
+                        </span>
+                    </li>`;
+                }).join('');
                 
                 // Dressing
                 document.getElementById('modalDressing').innerHTML = `
@@ -1799,10 +1857,11 @@
                     if(recipe.type === 'Ensalada') icon = 'fa-leaf';
 
                     const ingredientsList = recipe.ingredients.map(i => i.name).join(', ');
+                    const imageUrl = recipe.image || `https://source.unsplash.com/800x600/?${encodeURIComponent(recipe.name + ' food')}`;
 
                     card.innerHTML = `
-                        <div class="h-32 bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center text-purple-300 dark:text-purple-700 relative overflow-hidden">
-                            <i class="fas ${icon} text-6xl opacity-20 transform rotate-12"></i>
+                        <div class="h-32 bg-purple-50 dark:bg-purple-900/30 relative overflow-hidden">
+                            <img src="${imageUrl}" alt="${recipe.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('flex', 'items-center', 'justify-center'); this.parentElement.innerHTML='<i class=\\'fas ${icon} text-6xl opacity-20 transform rotate-12\\'></i>';">
                             <div class="absolute top-2 right-2 bg-white dark:bg-slate-800/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-purple-600 dark:text-purple-300 shadow-sm">
                                 ${recipe.time} min
                             </div>
