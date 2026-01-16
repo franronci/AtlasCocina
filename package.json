@@ -1,0 +1,17 @@
+{
+  "name": "atlas-ensaladas",
+  "version": "1.0.0",
+  "description": "El Atlas de las 150 Ensaladas - Explorador Interactivo",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "salads",
+    "recipes",
+    "cooking",
+    "food"
+  ],
+  "author": "",
+  "license": "MIT"
+}
